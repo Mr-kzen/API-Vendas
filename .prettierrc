@@ -1,0 +1,23 @@
+{
+  "semi": true,
+  "trailingComma": "all",
+  "singleQuote": true,
+  "printWidth": 80,
+  "arrowParens": "avoid",
+
+  "extends": ["prettier"],
+  "plugins": ["prettier"],
+
+  "prettier/prettier": [
+    "error",
+    {},
+    {
+      "singleQuote": true,
+      "parser": "flow",
+
+      "fileInfoOptions": {
+        "withNodeModules": true
+      }
+    }
+  ]
+}
