@@ -1,3 +1,4 @@
+import customersRouter from '@modules/customers/routes/customer.routes';
 import passwordRouter from '@modules/users/routes/password.routes';
 import profileRouter from '@modules/users/routes/profile.route';
 import { Router } from 'express';
@@ -12,6 +13,7 @@ routes.use('/products', productsRouter);
 routes.use('/user', userRouter);
 routes.use('/password', passwordRouter);
 routes.use('/profile', profileRouter);
+routes.use('/customer', customersRouter);
 
 Router.arguments('/sessions', sessionsRouter);
 
