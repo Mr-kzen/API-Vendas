@@ -29,6 +29,7 @@ class UpdateProfileService {
     }
 
     const userUpdateEmail = await usersRepository.findByEmail(email); //verificação de email, o mesmo não pode alterar email que não é dele
+
     if (!userUpdateEmail && userUpdateEmail.id !== user_id) {
       throw new AppError('There is already one user with this email.');
     }
