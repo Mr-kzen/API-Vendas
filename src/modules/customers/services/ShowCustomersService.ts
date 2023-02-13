@@ -1,13 +1,14 @@
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
-import CustomersRespository from '../repositories/CustomersRepository';
+import Customers from '../typeorm/entities/Customer';
+import CustomersRespository from '../typeorm/repositories/CustomersRepository';
 
 interface IRequest {
   id: string;
 }
 
-class DeleteCustomerService {
-  public async execute({ id }: IRequest): Promise<void> {
+class ShowCustomerService {
+  public async execute({ id }: IRequest): Promise<Customers> {
     const customersRepository = getCustomRepository(CustomersRespository);
 
     const customer = await customersRepository.findById(id);
@@ -16,8 +17,8 @@ class DeleteCustomerService {
       throw new AppError('Customer not fond.');
     }
 
-    await customersRepository.remove(customer);
+    return customer;
   }
 }
 
-export default DeleteCustomerService;
+export default ShowCustomerService;
