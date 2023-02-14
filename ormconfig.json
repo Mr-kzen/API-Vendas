@@ -6,19 +6,13 @@
   "password": "docker",
   "database": "apivendas",
   "synchronize": true,
-  "logging": true,
-
   "entities": [
     "./src/modules/**/typeorm/entities/*.ts"
   ],
 
   "migrations": [
-    "./src/shared/typeorm/migration/*.ts"
-  ],
-
-    "cli": {
-      "migrationsDir": "./src/shared/typeorm/migration/*"
-    }
+    "./src/shared/typeorm/migrations/*.ts"
+  ]
 }
 
 
