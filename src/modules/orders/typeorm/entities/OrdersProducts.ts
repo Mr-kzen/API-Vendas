@@ -31,6 +31,12 @@ class OrdersProducts {
   @JoinColumn({ name: 'product_id' })
   product: Product;
 
+  @Column()
+  order_id: string;
+
+  @Column()
+  Product_id: string;
+
   @CreateDateColumn()
   created_at: Date;
 
