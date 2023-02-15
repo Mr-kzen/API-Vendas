@@ -1,6 +1,6 @@
 export default {
   jwt: {
-    secret: 'meutoken',
+    secret: process.env.APP_SECRET,
     expiredIn: '1d',
   },
 };

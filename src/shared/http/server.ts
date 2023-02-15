@@ -1,14 +1,15 @@
-import { pagination } from 'typeorm-pagination';
-import uploadConfig from '@config/upload';
 import 'reflect-metadata';
+import 'dotenv/config';
+import 'express-async-errors';
 
 import express, { Request, Response, NextFunction } from 'express';
-import 'express-async-errors';
-// const express = require('express')
-import cors from 'cors';
-import AppError from '../errors/AppError';
-import '../../shared/typeorm';
+import { pagination } from 'typeorm-pagination';
 import { errors } from 'celebrate';
+
+import uploadConfig from '@config/upload';
+import cors from 'cors';
+import AppError from '@shared/errors/AppError';
+import '@shared/typeorm';
 
 const app = express();
 app.use(cors());
@@ -21,7 +22,6 @@ app.use('/files', express.static(uploadConfig.directory)); //rsc para consumir a
 
 //Rotas
 import routes from './routes';
-// import { ClientRequest } from 'http';
 
 app.use(routes);
 app.use(errors);
