@@ -1,14 +1,24 @@
 import { getCustomRepository } from 'typeorm';
-import Customers from '../typeorm/entities/Customer';
+import Customer from '../typeorm/entities/Customer';
 import CustomersRespository from '../typeorm/repositories/CustomersRepository';
 
+interface IPaginateCustomer {
+  from: number;
+  to: number;
+  per_page: number;
+  total: number;
+  current_page: number;
+  prev_page: number | null;
+  next_page: number | null;
+  data: Customer[];
+}
 class ListCustomerService {
-  public async execute(): Promise<Customers[]> {
+  public async execute(): Promise<IPaginateCustomer> {
     const customerRepository = getCustomRepository(CustomersRespository);
 
-    const users = customerRepository.find();
+    const customer = await customerRepository.createQueryBuilder().paginate();
 
-    return users;
+    return customer as IPaginateCustomer;
   }
 }
 

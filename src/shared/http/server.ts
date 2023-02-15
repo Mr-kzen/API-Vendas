@@ -1,3 +1,4 @@
+import { pagination } from 'typeorm-pagination';
 import uploadConfig from '@config/upload';
 import 'reflect-metadata';
 
@@ -13,6 +14,8 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+
+app.use(pagination);
 
 app.use('/files', express.static(uploadConfig.directory)); //rsc para consumir as imagens de avatar!
 
