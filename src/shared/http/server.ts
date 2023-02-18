@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import 'dotenv/config';
 import 'express-async-errors';
 import 'reflect-metadata';
+import '@shared/typeorm';
 
 import express, { Request, Response, NextFunction } from 'express';
 import { pagination } from 'typeorm-pagination';
@@ -10,22 +11,26 @@ import { errors } from 'celebrate';
 import uploadConfig from '@config/upload';
 import cors from 'cors';
 import AppError from '@shared/errors/AppError';
-import '@shared/typeorm';
+import rateLimiter from './middlewares/rateLimiter';
 
 const app = express();
+
 app.use(cors());
 
 app.use(express.json());
+
+app.use(rateLimiter);
 
 app.use(pagination);
 
 app.use('/files', express.static(uploadConfig.directory)); //rsc para consumir as imagens de avatar!
 
+app.use(errors);
+
 //Rotas
 import routes from './routes';
 
 app.use(routes);
-app.use(errors);
 
 //midlewar para tratamento de Errors
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
