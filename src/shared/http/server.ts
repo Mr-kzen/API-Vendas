@@ -4,7 +4,7 @@ import 'express-async-errors';
 import 'reflect-metadata';
 import '@shared/typeorm';
 
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import { pagination } from 'typeorm-pagination';
 import { errors } from 'celebrate';
 
@@ -33,24 +33,27 @@ import routes from './routes';
 app.use(routes);
 
 //midlewar para tratamento de Errors
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-  if (error instanceof AppError) {
-    return res.status(error.statusCode).json({
+app.use(
+  (error: Error, req: Request, res: Response /*, next: NextFunction*/) => {
+    if (error instanceof AppError) {
+      return res.status(error.statusCode).json({
+        status: 'error',
+        message: error.message,
+      });
+    }
+
+    // console.log(error);
+
+    //Quando o erro não for pela aplicação retorna um status 500 -> sem conhecimento do erro
+    return res.status(500).json({
       status: 'error',
-      message: error.message,
+      message: 'Internal service error',
     });
-  }
-
-  // console.log(error);
-
-  //Quando o erro não for pela aplicação retorna um status 500 -> sem conhecimento do erro
-  return res.status(500).json({
-    status: 'error',
-    message: 'Internal service error',
-  });
-});
+  },
+);
 
 //Porta do server
 app.listen(3333, () => {
+  // eslint-disable-next-line no-console
   console.log('Server started on port 3333');
 });
