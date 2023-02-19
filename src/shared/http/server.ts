@@ -39,12 +39,15 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
       status: 'error',
       message: error.message,
     });
-  } else {
-    return res.status(500).json({
-      status: 'error',
-      message: 'Internal service error',
-    });
-  } //Quando o erro não for pela aplicação retorna um status 500 -> sem conhecimento do erro
+  }
+
+  // console.log(error);
+
+  //Quando o erro não for pela aplicação retorna um status 500 -> sem conhecimento do erro
+  return res.status(500).json({
+    status: 'error',
+    message: 'Internal service error',
+  });
 });
 
 //Porta do server

@@ -1,7 +1,7 @@
-//Configuração para utilização do ethereal, teste de envio de email
-
 import handlebarsMailTemplate from './HandlebarsMailTemplate';
 import nodemailer from 'nodemailer';
+import aws from 'aws-sdk';
+import mailConfig from '@config/mail/mail';
 
 interface IMailContact {
   name: string;
@@ -22,30 +22,27 @@ interface ISendMail {
   templateData: IParseMailTemplate;
 }
 
-export default class EtherealMail {
+export default class SESMail {
   static async sendMail({
     to,
     from,
     subject,
     templateData,
   }: ISendMail): Promise<void> {
-    const account = await nodemailer.createTestAccount(); //Retorna uma promessa, utilizar await
     const mailTemplate = new handlebarsMailTemplate();
 
     const transporter = nodemailer.createTransport({
-      host: account.smtp.host,
-      port: account.smtp.port,
-      secure: account.smtp.secure,
-      auth: {
-        user: account.user,
-        pass: account.pass,
-      },
+      SES: new aws.SES({
+        apiVersion: '2010-12-01',
+      }),
     });
+
+    const { email, name } = mailConfig.defaults.from;
 
     const message = await transporter.sendMail({
       from: {
-        name: from?.name || 'Equipe API Vendas!',
-        address: from?.email || 'equipe@apivendas.com.br',
+        name: from?.name || name,
+        address: from?.email || email,
       },
       to: {
         name: to.name,
