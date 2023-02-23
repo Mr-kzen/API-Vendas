@@ -5,9 +5,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ICustomer } from './../../../domain/models/ICustomer';
 
-@Entity('customer')
-class Customers {
+@Entity('customers')
+class Customer implements ICustomer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -24,4 +25,4 @@ class Customers {
   updated_at: Date;
 }
 
-export default Customers;
+export default Customer;

@@ -3,6 +3,7 @@ import 'dotenv/config';
 import 'express-async-errors';
 import 'reflect-metadata';
 import '@shared/typeorm';
+import '@shared/contains';
 
 import express, { Request, Response } from 'express';
 import { pagination } from 'typeorm-pagination';
